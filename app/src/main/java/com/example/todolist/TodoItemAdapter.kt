@@ -17,7 +17,7 @@ class TodoItemAdapter(val todoList: List<TodoItem>) : RecyclerView.Adapter<TodoI
     override fun onBindViewHolder(holder: TodoItemViewHolder, position: Int) {
         val todoItem = todoList[position]
         holder.todoItemCheckBox.text = todoItem.content
-        holder.todoItemCheckBox.isChecked = todoItem.state
+        holder.todoItemCheckBox.isChecked = todoItem.isDone
     }
 
 }
