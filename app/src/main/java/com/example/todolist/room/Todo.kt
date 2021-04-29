@@ -7,6 +7,6 @@ import androidx.room.PrimaryKey
 data class Todo(var content: String, var isDone: Boolean) {
 
     @PrimaryKey(autoGenerate = true)
-    var id: Long = 1
+    var id: Long = 0
 
 }

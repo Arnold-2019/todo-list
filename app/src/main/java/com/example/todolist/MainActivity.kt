@@ -5,11 +5,15 @@ import android.content.SharedPreferences
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.todolist.room.AppDatabase
+import com.example.todolist.room.Todo
+import com.example.todolist.room.TodoDao
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlin.concurrent.thread
 
 class MainActivity : AppCompatActivity() {
 
-    private val todoList : List<TodoItem>? = null
+    private var todoList : List<Todo>? = null
 
     lateinit var editor: SharedPreferences.Editor
 
@@ -21,27 +25,36 @@ class MainActivity : AppCompatActivity() {
 
         initInstance()
 
+        val todoDao = AppDatabase.getDatabase(this).todoDao()
+
         addButton.setOnClickListener {
             val input = editText.text.toString()
             if (input.isNotBlank()) {
-                editor.run {
-                    putString("${++id}", editText.text.toString())
-                    apply()
+//                editor.run {
+//                    putString("${++id}", editText.text.toString())
+//                    apply()
+//                }
+
+                thread {
+                    val todoItem = Todo(input, false)
+                    todoItem.id = todoDao.insertTodo(todoItem)
                 }
+
                 editText.text = null
+            }
+            prepareTodoList(todoDao)
+
+            recyclerView.run {
+                layoutManager = LinearLayoutManager(this@MainActivity)
+                adapter = todoList?.let { TodoItemAdapter(it) }
+    //            adapter = TodoItemAdapter(todoList = listOf(
+    //                    TodoItem("Fetch my id card tomorrow afternoon", false),
+    //                    TodoItem("Finish my homework about Android storage", false)
+    //            ))
             }
         }
 
-        prepareTodoList()
 
-        recyclerView.run {
-            layoutManager = LinearLayoutManager(this@MainActivity)
-//            adapter = todoList?.let { TodoItemAdapter(it) }
-            adapter = TodoItemAdapter(todoList = listOf(
-                    TodoItem("Fetch my id card tomorrow afternoon", false),
-                    TodoItem("Finish my homework about Android storage", false)
-            ))
-        }
     }
 
     override fun onDestroy() {
@@ -65,7 +78,10 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun prepareTodoList() {
+    private fun prepareTodoList(todoDao: TodoDao) {
 
+        thread {
+            todoList = todoDao.loadAllTodoItems()
+        }
     }
 }

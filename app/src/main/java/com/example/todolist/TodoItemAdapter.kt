@@ -3,8 +3,9 @@ package com.example.todolist
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.example.todolist.room.Todo
 
-class TodoItemAdapter(val todoList: List<TodoItem>) : RecyclerView.Adapter<TodoItemViewHolder>() {
+class TodoItemAdapter(val todoList: List<Todo>) : RecyclerView.Adapter<TodoItemViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TodoItemViewHolder {
         val view = LayoutInflater.from(parent.context)
@@ -15,9 +16,9 @@ class TodoItemAdapter(val todoList: List<TodoItem>) : RecyclerView.Adapter<TodoI
     override fun getItemCount() = todoList.size
 
     override fun onBindViewHolder(holder: TodoItemViewHolder, position: Int) {
-        val todoItem = todoList[position]
-        holder.todoItemCheckBox.text = todoItem.content
-        holder.todoItemCheckBox.isChecked = todoItem.isDone
+        val todo = todoList[position]
+        holder.todoItemCheckBox.text = todo.content
+        holder.todoItemCheckBox.isChecked = todo.isDone
     }
 
 }
