@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.todolist.room.Todo
 
-class TodoItemAdapter(val todoList: List<Todo>) : RecyclerView.Adapter<TodoItemViewHolder>() {
+class TodoItemAdapter(private val todoList: List<Todo>) : RecyclerView.Adapter<TodoItemViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TodoItemViewHolder {
         val view = LayoutInflater.from(parent.context)

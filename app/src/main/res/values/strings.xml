@@ -3,4 +3,5 @@
     <string name="add">add</string>
     <string name="todo_list">Todo List</string>
     <string name="input_todo_item">Input todo item</string>
+    <string name="clear_all">Clear All</string>
 </resources>
