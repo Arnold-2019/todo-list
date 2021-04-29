@@ -16,7 +16,7 @@ interface TodoDao {
     fun updateTodo(newTodo: Todo)
 
     @Query("select * from Todo")
-    fun loadAllTodoItems(): List<Todo>
+    fun loadAllTodoItems(): MutableList<Todo>
 
     @Query("select * from Todo where isDone is 1")
     fun loadTodoItems(): List<Todo>

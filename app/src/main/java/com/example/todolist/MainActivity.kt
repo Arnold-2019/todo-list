@@ -13,7 +13,7 @@ import kotlin.concurrent.thread
 
 class MainActivity : AppCompatActivity() {
 
-    private var todoList : List<Todo>? = null
+    lateinit var todoDao: TodoDao
 
     lateinit var viewModel: TodoListViewModel
 
@@ -21,52 +21,41 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val todoDao = AppDatabase.getDatabase(this).todoDao()
+        todoDao = AppDatabase.getDatabase(this).todoDao()
+
+        viewModel = ViewModelProvider(this).get(TodoListViewModel::class.java)
+        viewModel.initTodoList(todoDao)
 
         recyclerView.layoutManager = LinearLayoutManager(this)
-
-//        addButton.setOnClickListener {
-//            val input = editText.text.toString()
-//            if (input.isNotBlank()) {
-//
-//                thread {
-//                    val todoItem = Todo(input, false)
-//                    todoItem.id = todoDao.insertTodo(todoItem)
-//                }
-//
-//                editText.text = null
-//            }
-//            prepareTodoList(todoDao)
-//
-//            recyclerView.run {
-//                layoutManager = LinearLayoutManager(this@MainActivity)
-//                adapter = todoList?.let { TodoItemAdapter(it) }
-//            }
-//        }
-
-//        clear_all.setOnClickListener {
-//            thread {
-//                todoDao.deleteAllTodoItems()
-//            }
-//        }
-        viewModel = ViewModelProvider(this).get(TodoListViewModel::class.java)
+        refresh()
 
         addButton.setOnClickListener {
-            viewModel.todoList.add(
-                Todo(editText.text.toString(), false)
-            )
-            refreshRecyclerView()
+            val input = editText.text.toString()
+
+            if (input.isNotBlank()) {
+                thread {
+                    val todoItem = Todo(input, false)
+                    todoItem.id = todoDao.insertTodo(todoItem)
+                }
+
+                viewModel.addTodoItem(Todo(input, false))
+                refresh()
+            }
         }
-        refreshRecyclerView()
+
+        clear_all.setOnClickListener {
+            thread {
+                todoDao.deleteAllTodoItems()
+            }
+            viewModel.initTodoList(todoDao)
+            refresh()
+        }
+
+        refresh()
     }
 
-    private fun refreshRecyclerView() {
+    private fun refresh() {
         recyclerView.adapter = TodoItemAdapter(viewModel.todoList)
-    }
-
-    private fun prepareTodoList(todoDao: TodoDao) {
-        thread {
-            todoList = todoDao.loadAllTodoItems()
-        }
+        editText.text = null
     }
 }
