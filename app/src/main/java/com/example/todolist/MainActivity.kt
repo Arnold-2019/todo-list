@@ -4,10 +4,11 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.todolist.room.AppDatabase
-import com.example.todolist.room.Todo
-import com.example.todolist.room.TodoDao
-import com.example.todolist.room.TodoListViewModel
+import com.example.todolist.logic.dao.AppDatabase
+import com.example.todolist.logic.dao.Todo
+import com.example.todolist.logic.dao.TodoDao
+import com.example.todolist.ui.TodoListAdapter
+import com.example.todolist.ui.TodoListViewModel
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlin.concurrent.thread
 
@@ -56,7 +57,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun refresh() {
-        recyclerView.adapter = TodoItemAdapter(viewModel.todoList)
+        recyclerView.adapter =
+            TodoListAdapter(viewModel.todoList)
         editText.text = null
     }
 }

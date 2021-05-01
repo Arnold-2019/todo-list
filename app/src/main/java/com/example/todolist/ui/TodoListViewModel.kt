@@ -1,6 +1,8 @@
-package com.example.todolist.room
+package com.example.todolist.ui
 
 import androidx.lifecycle.ViewModel
+import com.example.todolist.logic.dao.Todo
+import com.example.todolist.logic.dao.TodoDao
 import kotlin.concurrent.thread
 
 class TodoListViewModel : ViewModel() {
