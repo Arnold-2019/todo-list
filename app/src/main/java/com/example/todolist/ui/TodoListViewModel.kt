@@ -1,22 +1,31 @@
 package com.example.todolist.ui
 
 import androidx.lifecycle.ViewModel
+import com.example.todolist.logic.Repository
 import com.example.todolist.logic.dao.Todo
-import com.example.todolist.logic.dao.TodoDao
-import kotlin.concurrent.thread
 
 class TodoListViewModel : ViewModel() {
 
-    var todoList: MutableList<Todo> = mutableListOf()
+    val todoList: List<Todo>
+        get() = _todoList
 
-    fun initTodoList(todoDao: TodoDao) {
-        thread {
-            todoList = todoDao.loadAllTodoItems()
-        }
+    private var _todoList: MutableList<Todo> = mutableListOf()
+
+    init {
+        _todoList.addAll(Repository.searchTodoItems())
     }
 
     fun addTodoItem(item: Todo) {
-        todoList.add(item)
+
+        Repository.add(item)
+
+        _todoList.add(item)
+
     }
 
+    fun deleteAllTodoItems() {
+        Repository.deleteAllTodoItems()
+
+        _todoList = mutableListOf()
+    }
 }
