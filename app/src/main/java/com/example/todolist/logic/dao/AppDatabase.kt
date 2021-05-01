@@ -17,16 +17,13 @@ abstract class AppDatabase : RoomDatabase() {
         @Synchronized
         fun getDatabase(context: Context): AppDatabase {
             instance?.let { return it }
-            return Room.databaseBuilder(context.applicationContext,
-                AppDatabase::class.java, "todo_list_database")
+            return Room.databaseBuilder(
+                context.applicationContext,
+                AppDatabase::class.java, "todo_list_database"
+            )
                 .build().apply {
                     instance = this
                 }
         }
-
     }
-
-
-
-
 }

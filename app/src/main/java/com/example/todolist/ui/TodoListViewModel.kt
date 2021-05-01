@@ -12,7 +12,7 @@ class TodoListViewModel : ViewModel() {
     private var _todoList: MutableList<Todo> = mutableListOf()
 
     init {
-        _todoList.addAll(Repository.searchTodoItems())
+        _todoList.addAll(Repository.searchAllItems())
     }
 
     fun addTodoItem(item: Todo) {
@@ -24,7 +24,7 @@ class TodoListViewModel : ViewModel() {
     }
 
     fun deleteAllTodoItems() {
-        Repository.deleteAllTodoItems()
+        Repository.deleteAllItems()
 
         _todoList = mutableListOf()
     }

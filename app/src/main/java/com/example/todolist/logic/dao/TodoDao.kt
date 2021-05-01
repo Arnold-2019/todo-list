@@ -29,5 +29,4 @@ interface TodoDao {
 
     @Query("delete from Todo")
     fun deleteAllTodoItems()
-
 }

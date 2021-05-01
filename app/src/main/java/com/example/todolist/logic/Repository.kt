@@ -9,25 +9,24 @@ object Repository {
 
     private val todoDao = AppDatabase.getDatabase(TodoListApplication.context).todoDao()
 
-    fun searchTodoItems() : List<Todo> {
-
-        var result : List<Todo> = listOf()
-
-        thread { result =  todoDao.loadAllTodoItems() }
-
-        return  result
-    }
-
     fun add(item: Todo) {
 
         thread { item.id = todoDao.insertTodo(item) }
 
     }
 
-    fun deleteAllTodoItems() {
+    fun searchAllItems(): List<Todo> {
+
+        var result: List<Todo> = listOf()
+
+        thread { result = todoDao.loadAllTodoItems() }
+
+        return result
+    }
+
+    fun deleteAllItems() {
 
         thread { todoDao.deleteAllTodoItems() }
 
     }
-
 }
