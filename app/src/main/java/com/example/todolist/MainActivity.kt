@@ -27,20 +27,16 @@ class MainActivity : AppCompatActivity() {
         viewModel.initTodoList(todoDao)
 
         recyclerView.layoutManager = LinearLayoutManager(this)
-        refresh()
 
         addButton.setOnClickListener {
             val input = editText.text.toString()
 
             if (input.isNotBlank()) {
-                thread {
-                    val todoItem = Todo(input, false)
-                    todoItem.id = todoDao.insertTodo(todoItem)
-                }
-
-                viewModel.addTodoItem(Todo(input, false))
-                refresh()
+                val todoItem = Todo(input, false)
+                thread { todoItem.id = todoDao.insertTodo(todoItem) }
+                viewModel.addTodoItem(todoItem)
             }
+            refresh()
         }
 
         clear_all.setOnClickListener {
@@ -51,6 +47,11 @@ class MainActivity : AppCompatActivity() {
             refresh()
         }
 
+        refresh()
+    }
+
+    override fun onResume() {
+        super.onResume()
         refresh()
     }
 

@@ -7,6 +7,9 @@
     <CheckBox
         android:id="@+id/checkbox_item"
         android:layout_width="match_parent"
-        android:layout_height="32dp"
+        android:layout_height="@dimen/box_height"
+        android:background="@drawable/todo_item_background"
+        android:layout_marginTop="@dimen/default_margin_0_25x"
+        android:layout_marginBottom="@dimen/default_margin_0_25x"
         android:textSize="16sp"/>
 </FrameLayout>
