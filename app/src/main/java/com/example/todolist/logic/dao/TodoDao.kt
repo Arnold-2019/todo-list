@@ -1,4 +1,4 @@
-package com.example.todolist.room
+package com.example.todolist.logic.dao
 
 import androidx.room.Dao
 import androidx.room.Delete
@@ -18,9 +18,6 @@ interface TodoDao {
     @Query("select * from Todo")
     fun loadAllTodoItems(): MutableList<Todo>
 
-    @Query("select * from Todo where isDone is 1")
-    fun loadTodoItems(): List<Todo>
-
     @Delete
     fun deleteTodoItem(todo: Todo)
 
@@ -29,5 +26,4 @@ interface TodoDao {
 
     @Query("delete from Todo")
     fun deleteAllTodoItems()
-
 }

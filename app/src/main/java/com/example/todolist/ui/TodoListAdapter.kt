@@ -1,14 +1,17 @@
-package com.example.todolist
+package com.example.todolist.ui
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.CheckBox
+import android.widget.CompoundButton
 import androidx.recyclerview.widget.RecyclerView
-import com.example.todolist.room.Todo
+import com.example.todolist.R
+import com.example.todolist.logic.Repository
+import com.example.todolist.logic.dao.Todo
 
-class TodoItemAdapter(private val todoList: List<Todo>) :
-    RecyclerView.Adapter<TodoItemAdapter.ViewHolder>() {
+class TodoListAdapter(private val todoList: List<Todo>) :
+    RecyclerView.Adapter<TodoListAdapter.ViewHolder>() {
 
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val todoItemCheckBox: CheckBox = view.findViewById(R.id.checkbox_item)
@@ -26,5 +29,10 @@ class TodoItemAdapter(private val todoList: List<Todo>) :
         val todo = todoList[position]
         holder.todoItemCheckBox.text = todo.content
         holder.todoItemCheckBox.isChecked = todo.isDone
+
+        holder.todoItemCheckBox.setOnCheckedChangeListener { _: CompoundButton, b: Boolean ->
+            todo.isDone = b
+            Repository.updateTodoItem(todo)
+        }
     }
 }
