@@ -29,4 +29,10 @@ object Repository {
         thread { todoDao.deleteAllTodoItems() }
 
     }
+
+    fun updateTodoItem(todo: Todo) {
+
+        thread { todoDao.updateTodo(todo) }
+
+    }
 }
