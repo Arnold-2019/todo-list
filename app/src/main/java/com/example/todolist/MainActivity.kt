@@ -2,6 +2,7 @@ package com.example.todolist
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.todolist.logic.dao.Todo
@@ -19,11 +20,17 @@ class MainActivity : AppCompatActivity() {
 
         viewModel = ViewModelProvider(this).get(TodoListViewModel::class.java)
 
+        val adapter = TodoListAdapter()
+
         recyclerView.run {
             layoutManager = LinearLayoutManager(this@MainActivity)
-            adapter = TodoListAdapter(viewModel.todoList)
+            this.adapter = adapter
         }
 
+        viewModel.searchAllTodoItems().observe(this, Observer {
+
+            adapter.setList(it)
+        })
 
         addButton.setOnClickListener {
             val input = editText.text.toString()
@@ -31,25 +38,13 @@ class MainActivity : AppCompatActivity() {
                 viewModel.addTodoItem(
                     Todo(input, false)
                 )
+
+                editText.text = null
             }
-            refresh()
         }
 
         clear_all.setOnClickListener {
             viewModel.deleteAllTodoItems()
-            refresh()
         }
-
-        refresh()
-    }
-
-    override fun onResume() {
-        super.onResume()
-        refresh()
-    }
-
-    private fun refresh() {
-        recyclerView.adapter = TodoListAdapter(viewModel.todoList)
-        editText.text = null
     }
 }

@@ -10,8 +10,15 @@ import com.example.todolist.R
 import com.example.todolist.logic.Repository
 import com.example.todolist.logic.dao.Todo
 
-class TodoListAdapter(private val todoList: List<Todo>) :
+class TodoListAdapter :
     RecyclerView.Adapter<TodoListAdapter.ViewHolder>() {
+
+    private lateinit var todoList: List<Todo>
+
+    fun setList(todoList: List<Todo>) {
+        this.todoList = todoList
+        notifyDataSetChanged()
+    }
 
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val todoItemCheckBox: CheckBox = view.findViewById(R.id.checkbox_item)
@@ -23,7 +30,9 @@ class TodoListAdapter(private val todoList: List<Todo>) :
         return ViewHolder(view)
     }
 
-    override fun getItemCount() = todoList.size
+    override fun getItemCount(): Int {
+        return if (todoList.isNullOrEmpty()) 0 else todoList.size
+    }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val todo = todoList[position]
