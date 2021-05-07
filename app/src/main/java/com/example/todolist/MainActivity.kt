@@ -28,7 +28,6 @@ class MainActivity : AppCompatActivity() {
         }
 
         viewModel.searchAllTodoItems().observe(this, Observer {
-
             adapter.setList(it)
         })
 

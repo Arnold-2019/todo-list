@@ -13,7 +13,7 @@ import com.example.todolist.logic.dao.Todo
 class TodoListAdapter :
     RecyclerView.Adapter<TodoListAdapter.ViewHolder>() {
 
-    private lateinit var todoList: List<Todo>
+    private var todoList: List<Todo> = listOf()
 
     fun setList(todoList: List<Todo>) {
         this.todoList = todoList
