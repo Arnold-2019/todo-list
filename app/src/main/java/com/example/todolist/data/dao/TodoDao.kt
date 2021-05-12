@@ -1,6 +1,5 @@
-package com.example.todolist.logic.dao
+package com.example.todolist.data.dao
 
-import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
@@ -17,7 +16,7 @@ interface TodoDao {
     fun updateTodo(newTodo: Todo)
 
     @Query("select * from Todo")
-    fun loadAllTodoItems(): LiveData<MutableList<Todo>>
+    fun loadAllTodoItems(): MutableList<Todo>
 
     @Delete
     fun deleteTodoItem(todo: Todo)

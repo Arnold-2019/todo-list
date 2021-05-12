@@ -1,29 +1,29 @@
 package com.example.todolist.ui
 
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.todolist.logic.Repository
-import com.example.todolist.logic.dao.Todo
+import com.example.todolist.data.Repository
+import com.example.todolist.data.dao.Todo
 
 class TodoListViewModel : ViewModel() {
 
-    private val todoList: LiveData<MutableList<Todo>> = Repository.searchAllItems()
+    private val _todoList: MutableLiveData<List<Todo>> = MutableLiveData(mutableListOf())
+    var todoList: LiveData<List<Todo>> = _todoList
+
+    private val repo = Repository()
 
     fun addTodoItem(item: Todo) {
-
-        Repository.add(item)
-
+        repo.add(item)
     }
 
     fun deleteAllTodoItems() {
-
-        Repository.deleteAllItems()
-
+        repo.deleteAllItems()
     }
 
-    fun searchAllTodoItems(): LiveData<MutableList<Todo>> {
-
-        return todoList
-
+    fun getAllTodoItems(){
+        repo.searchAllItems{
+            _todoList.postValue(it)
+        }
     }
 }

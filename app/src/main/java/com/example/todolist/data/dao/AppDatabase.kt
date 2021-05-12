@@ -1,4 +1,4 @@
-package com.example.todolist.logic.dao
+package com.example.todolist.data.dao
 
 import android.content.Context
 import androidx.room.Database

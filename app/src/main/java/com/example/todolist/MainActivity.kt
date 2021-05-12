@@ -5,7 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.todolist.logic.dao.Todo
+import com.example.todolist.data.dao.Todo
 import com.example.todolist.ui.TodoListAdapter
 import com.example.todolist.ui.TodoListViewModel
 import kotlinx.android.synthetic.main.activity_main.*
@@ -27,7 +27,9 @@ class MainActivity : AppCompatActivity() {
             this.adapter = adapter
         }
 
-        viewModel.searchAllTodoItems().observe(this, Observer {
+        viewModel.getAllTodoItems()
+
+        viewModel.todoList.observe(this, Observer {
             adapter.setList(it)
         })
 
