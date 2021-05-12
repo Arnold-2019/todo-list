@@ -9,20 +9,28 @@ import com.example.todolist.data.dao.Todo
 class TodoListViewModel : ViewModel() {
 
     private val _todoList: MutableLiveData<List<Todo>> = MutableLiveData(mutableListOf())
-    var todoList: LiveData<List<Todo>> = _todoList
-
-    private val repo = Repository()
+    val todoList: LiveData<List<Todo>> = _todoList
 
     fun addTodoItem(item: Todo) {
-        repo.add(item)
+        Repository.add(item) {
+            _todoList.postValue(it)
+        }
     }
 
     fun deleteAllTodoItems() {
-        repo.deleteAllItems()
+        Repository.deleteAllItems {
+            _todoList.postValue(it)
+        }
     }
 
-    fun getAllTodoItems(){
-        repo.searchAllItems{
+    fun getAllTodoItems() {
+        Repository.searchAllItems {
+            _todoList.postValue(it)
+        }
+    }
+
+    fun updateItem(item: Todo) {
+        Repository.updateTodoList(item) {
             _todoList.postValue(it)
         }
     }

@@ -20,7 +20,7 @@ class MainActivity : AppCompatActivity() {
 
         viewModel = ViewModelProvider(this).get(TodoListViewModel::class.java)
 
-        val adapter = TodoListAdapter()
+        val adapter = TodoListAdapter(viewModel)
 
         recyclerView.run {
             layoutManager = LinearLayoutManager(this@MainActivity)

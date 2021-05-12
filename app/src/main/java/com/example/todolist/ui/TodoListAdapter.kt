@@ -4,11 +4,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.CheckBox
+import android.widget.CompoundButton
 import androidx.recyclerview.widget.RecyclerView
 import com.example.todolist.R
+import com.example.todolist.data.Repository
 import com.example.todolist.data.dao.Todo
 
-class TodoListAdapter :
+class TodoListAdapter(private val viewModel: TodoListViewModel) :
     RecyclerView.Adapter<TodoListAdapter.TodoListViewHolder>() {
 
     private var todoList: List<Todo> = listOf()
@@ -38,10 +40,12 @@ class TodoListAdapter :
 
         holder.bind(todo)
 
-//        holder.todoItemCheckBox.setOnCheckedChangeListener { _: CompoundButton, isChecked: Boolean ->
-//            todo.isDone = isChecked
-//            Repository.updateTodoItem(todo)
-//        }
+        holder.todoItemCheckBox.setOnCheckedChangeListener { _: CompoundButton, isChecked: Boolean ->
+            todo.isDone = isChecked
+            Repository.updateTodoList(todo) {
+                viewModel.updateItem(todo)
+            }
+        }
     }
 
     inner class TodoListViewHolder(view: View) : RecyclerView.ViewHolder(view) {

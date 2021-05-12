@@ -6,25 +6,34 @@ import com.example.todolist.data.dao.Todo
 import com.example.todolist.data.dao.TodoDao
 import kotlin.concurrent.thread
 
-class Repository {
+object Repository {
 
     private val todoDao: TodoDao = AppDatabase.getDatabase(TodoListApplication.context).todoDao()
 
-    fun add(item: Todo) {
-        thread { item.id = todoDao.insertTodo(item) }
+    fun add(item: Todo, callBack: (todoList: MutableList<Todo>) -> Unit) {
+        thread {
+            item.id = todoDao.insertTodo(item)
+            callBack(todoDao.loadAllTodoItems())
+        }
     }
 
     fun searchAllItems(callBack: (todoList: MutableList<Todo>) -> Unit) {
-
-        // async operation, but return directly ??
-        // -> call back
-        // -> thread communication
         thread {
             callBack(todoDao.loadAllTodoItems())
         }
     }
 
-    fun deleteAllItems() {
-        thread { todoDao.deleteAllTodoItems() }
+    fun deleteAllItems(callBack: (todoList: MutableList<Todo>) -> Unit) {
+        thread {
+            todoDao.deleteAllTodoItems()
+            callBack(todoDao.loadAllTodoItems())
+        }
+    }
+
+    fun updateTodoList(item: Todo, callBack: (todoList: MutableList<Todo>) -> Unit) {
+        thread {
+            todoDao.updateTodo(item)
+            callBack(todoDao.loadAllTodoItems())
+        }
     }
 }
