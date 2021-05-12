@@ -3,8 +3,10 @@ package com.example.todolist.ui
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.CheckBox
 import android.widget.CompoundButton
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.example.todolist.R
 import com.example.todolist.data.Repository
@@ -42,7 +44,7 @@ class TodoListAdapter(private val viewModel: TodoListViewModel) :
 
         holder.todoItemCheckBox.setOnCheckedChangeListener { _: CompoundButton, isChecked: Boolean ->
             todo.isDone = isChecked
-            Repository.updateTodoList(todo) {
+            Repository.updateItem(todo) {
                 viewModel.updateItem(todo)
             }
         }
@@ -51,11 +53,17 @@ class TodoListAdapter(private val viewModel: TodoListViewModel) :
     inner class TodoListViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
         val todoItemCheckBox: CheckBox = view.findViewById(R.id.checkbox_item)
+        private val deleteButton: Button = view.findViewById(R.id.delete_button)
 
         fun bind(todo: Todo) {
             with(todoItemCheckBox) {
                 text = todo.content
                 isChecked = todo.isDone
+                deleteButton.isVisible = isChecked
+            }
+
+            deleteButton.setOnClickListener {
+                viewModel.deleteItem(todo)
             }
         }
     }

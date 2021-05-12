@@ -30,9 +30,16 @@ object Repository {
         }
     }
 
-    fun updateTodoList(item: Todo, callBack: (todoList: MutableList<Todo>) -> Unit) {
+    fun updateItem(item: Todo, callBack: (todoList: MutableList<Todo>) -> Unit) {
         thread {
             todoDao.updateTodo(item)
+            callBack(todoDao.loadAllTodoItems())
+        }
+    }
+
+    fun deleteItem(item: Todo, callBack: (todoList: MutableList<Todo>) -> Unit) {
+        thread {
+            todoDao.deleteTodoItemById(item.id)
             callBack(todoDao.loadAllTodoItems())
         }
     }

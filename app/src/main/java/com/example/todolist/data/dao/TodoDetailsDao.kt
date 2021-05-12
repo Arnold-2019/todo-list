@@ -7,10 +7,10 @@ import androidx.room.Query
 import androidx.room.Update
 
 @Dao
-interface TodoDao {
+interface TodoDetailsDao {
 
     @Insert
-    fun insertTodo(todo: Todo): Long
+    fun insertTodo(todo: TodoDetails): Long
 
     @Update
     fun updateTodo(newTodo: Todo)
@@ -22,7 +22,7 @@ interface TodoDao {
     fun deleteTodoItem(todo: Todo)
 
     @Query("delete from Todo where id = :id")
-    fun deleteTodoItemById(id: Long): Int
+    fun deleteTodoItemById(id: Int): Int
 
     @Query("delete from Todo")
     fun deleteAllTodoItems()

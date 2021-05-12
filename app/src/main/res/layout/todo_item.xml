@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <CheckBox
         android:id="@+id/checkbox_item"
@@ -11,5 +11,19 @@
         android:background="@drawable/todo_item_background"
         android:layout_marginTop="@dimen/default_margin_0_25x"
         android:layout_marginBottom="@dimen/default_margin_0_25x"
-        android:textSize="16sp"/>
-</FrameLayout>
+        android:textSize="16sp"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <Button
+        android:id="@+id/delete_button"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:text="@string/delete"
+        android:backgroundTint="@color/purple_200"
+        android:layout_marginEnd="@dimen/default_margin_0_5x"
+        app:layout_constraintBottom_toBottomOf="@+id/checkbox_item"
+        app:layout_constraintEnd_toEndOf="@+id/checkbox_item"
+        app:layout_constraintTop_toTopOf="@+id/checkbox_item"
+        android:visibility="gone"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

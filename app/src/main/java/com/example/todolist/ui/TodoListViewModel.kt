@@ -30,7 +30,13 @@ class TodoListViewModel : ViewModel() {
     }
 
     fun updateItem(item: Todo) {
-        Repository.updateTodoList(item) {
+        Repository.updateItem(item) {
+            _todoList.postValue(it)
+        }
+    }
+
+    fun deleteItem(item: Todo) {
+        Repository.deleteItem(item) {
             _todoList.postValue(it)
         }
     }
