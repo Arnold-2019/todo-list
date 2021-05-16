@@ -6,11 +6,12 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.todolist.data.dao.Todo
+import com.example.todolist.ui.EditTodoFragment.EditTodoDialogListener
 import com.example.todolist.ui.TodoListAdapter
 import com.example.todolist.ui.TodoListViewModel
 import kotlinx.android.synthetic.main.activity_main.*
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), EditTodoDialogListener {
 
     lateinit var viewModel: TodoListViewModel
 
@@ -20,7 +21,7 @@ class MainActivity : AppCompatActivity() {
 
         viewModel = ViewModelProvider(this).get(TodoListViewModel::class.java)
 
-        val adapter = TodoListAdapter(viewModel)
+        val adapter = TodoListAdapter(viewModel, this)
 
         recyclerView.run {
             layoutManager = LinearLayoutManager(this@MainActivity)
@@ -47,5 +48,9 @@ class MainActivity : AppCompatActivity() {
         clear_all.setOnClickListener {
             viewModel.deleteAllTodoItems()
         }
+    }
+
+    override fun apply(todo: Todo) {
+        viewModel.updateItem(todo)
     }
 }
