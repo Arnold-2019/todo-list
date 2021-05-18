@@ -4,4 +4,10 @@
     <string name="todo_list">Todo List</string>
     <string name="input_todo_item">Input todo item</string>
     <string name="clear_all">Clear All</string>
+    <string name="delete">Delete</string>
+    <string name="edit">edit</string>
+    <string name="submit">submit</string>
+    <string name="cancel">cancel</string>
+    <string name="todo_details_to_be_edit">Todo details to be edit</string>
+    <string name="update_your_todo_details">Update your todo details</string>
 </resources>
