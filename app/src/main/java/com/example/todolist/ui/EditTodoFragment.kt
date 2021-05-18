@@ -10,6 +10,9 @@ import com.example.todolist.R
 import com.example.todolist.data.dao.Todo
 import kotlinx.android.synthetic.main.fragment_edit_todo.view.*
 
+
+// add view model for this fragment
+// or share view model
 class EditTodoFragment(private val todo: Todo) : DialogFragment() {
     lateinit var listener: EditTodoDialogListener
 

@@ -15,6 +15,7 @@ import com.example.todolist.data.dao.Todo
 import com.example.todolist.ui.TodoListAdapter.TodoListViewHolder
 
 class TodoListAdapter(
+    // use interface
     private val viewModel: TodoListViewModel,
     private val context: Context
 ) : RecyclerView.Adapter<TodoListViewHolder>() {
