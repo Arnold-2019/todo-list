@@ -36,5 +36,3 @@ abstract class AppDatabase : RoomDatabase() {
         }
     }
 }
-
-// todo: room data driving + corresponding to data update

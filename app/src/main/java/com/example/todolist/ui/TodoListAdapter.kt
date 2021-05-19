@@ -14,9 +14,14 @@ import com.example.todolist.R
 import com.example.todolist.data.dao.Todo
 import com.example.todolist.ui.TodoListAdapter.TodoListViewHolder
 
+interface TodoItemChangedListener {
+    fun checkedChanged(todo: Todo)
+    fun deleteButtonClicked(todo: Todo)
+}
+
 class TodoListAdapter(
     // todo: use interface
-    private val viewModel: TodoListViewModel,
+    private val todoItemChangedListener: TodoItemChangedListener,
     private val context: Context
 ) : RecyclerView.Adapter<TodoListViewHolder>() {
 
@@ -26,7 +31,6 @@ class TodoListAdapter(
         this.todoList = todoList
         notifyDataSetChanged()
     }
-
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TodoListViewHolder {
         return TodoListViewHolder(
@@ -53,15 +57,14 @@ class TodoListAdapter(
                 isChecked = todo.isDone
                 setOnCheckedChangeListener { _: CompoundButton, isChecked: Boolean ->
                     todo.isDone = isChecked
-                    viewModel.updateItem(todo)
+                    todoItemChangedListener.checkedChanged(todo)
                 }
             }
 
             with(deleteButton) {
                 isVisible = todoItemCheckBox.isChecked
                 setOnClickListener {
-                    if (todoItemCheckBox.isChecked)
-                        viewModel.deleteItem(todo)
+                    todoItemChangedListener.deleteButtonClicked(todo)
                 }
             }
 
