@@ -6,6 +6,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.todolist.data.dao.Todo
+import com.example.todolist.ui.EditTodoFragment
 import com.example.todolist.ui.TodoListAdapter
 import com.example.todolist.ui.TodoItemChangedListener
 import com.example.todolist.ui.TodoListViewModel
@@ -21,7 +22,7 @@ class MainActivity : AppCompatActivity(), TodoItemChangedListener {
 
         viewModel = ViewModelProvider(this).get(TodoListViewModel::class.java)
 
-        val adapter = TodoListAdapter(this, this)
+        val adapter = TodoListAdapter(this)
 
         recyclerView.run {
             layoutManager = LinearLayoutManager(this@MainActivity)
@@ -56,5 +57,9 @@ class MainActivity : AppCompatActivity(), TodoItemChangedListener {
 
     override fun deleteButtonClicked(todo: Todo) {
         viewModel.deleteItem(todo)
+    }
+
+    override fun loadDialogFragment(todo: Todo) {
+        EditTodoFragment(todo).show(supportFragmentManager, "editTodoDialog")
     }
 }
